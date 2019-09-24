@@ -3,7 +3,7 @@ kind: pipe
 name: default
 
 steps:
-- name: test:
+- name: test
     image: phillipkhne/trizen-docker
     commands:
       - trizen -Sy --noinstall --noconfirm --movepkg platformio
