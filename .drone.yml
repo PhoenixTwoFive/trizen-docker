@@ -1,0 +1,16 @@
+
+kind: pipe
+name: default
+
+steps:
+- name: test:
+    image: phillipkhne/trizen-docker
+    commands:
+      - trizen -Sy --noinstall --noconfirm --movepkg platformio
+
+- name: gitea_release
+  image: plugins/gitea-release
+  settings:
+    base_url: https://gitea.phillipathome.dynv6.net
+    api_key: 87f2fa04a440ffefca92df90601268b8d10ed771
+    files: /var/cache/pacman/pkg/*
