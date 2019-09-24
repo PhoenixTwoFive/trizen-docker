@@ -1,5 +1,6 @@
 
 kind: pipe
+type: docker
 name: default
 
 steps:
