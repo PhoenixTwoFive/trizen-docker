@@ -6,7 +6,7 @@ steps:
 - name: test
   image: phillipkhne/trizen-docker
   commands:
-    - trizen -Sy --noinstall --noconfirm --movepkg platformio
+    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs botsay
 
 - name: deploy
   image: appleboy/drone-scp
@@ -15,5 +15,5 @@ steps:
     username: sftpuser
     password: uses_sftp
     port: 22
+    source: pkgs/*.pkg.tar.xz
     target: /var/www/html/archpkgs/
-    source: /var/cache/pacman/pkg/*
