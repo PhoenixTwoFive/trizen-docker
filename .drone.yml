@@ -6,6 +6,7 @@ steps:
 - name: test
   image: phillipkhne/trizen-docker
   commands:
+    - sudo mkdir ./pkgs
     - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs botsay
 
 - name: deploy
