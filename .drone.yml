@@ -2,7 +2,6 @@
 kind: pipe
 name: default
 
-
 steps:
 - name: test:
     image: phillipkhne/trizen-docker
