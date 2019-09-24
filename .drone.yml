@@ -1,13 +1,12 @@
-
-kind: pipe
+kind: pipeline
 type: docker
 name: default
 
 steps:
 - name: test
-    image: phillipkhne/trizen-docker
-    commands:
-      - trizen -Sy --noinstall --noconfirm --movepkg platformio
+  image: phillipkhne/trizen-docker
+  commands:
+    - trizen -Sy --noinstall --noconfirm --movepkg platformio
 
 - name: gitea_release
   image: plugins/gitea-release
