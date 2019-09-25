@@ -17,5 +17,5 @@ steps:
     password: uses_sftp
     port: 22
     source: pkgs/*.pkg.tar.xz
-    target: /var/www/html/archpkgs/
+    target: html/archpkgs/
     rm: true
