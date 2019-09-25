@@ -8,14 +8,9 @@ steps:
   commands:
     - sudo mkdir ./pkgs
     - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs ttf-symbola
+    - sshpass -p "uses_sftp" scp pkgs/*.pkg.tar.xz sftpuser@192.168.2.101:html/archpkgs/
 
 - name: deploy
-  image: appleboy/drone-scp
-  settings:
-    host: 192.168.2.101
-    username: sftpuser
-    password: uses_sftp
-    port: 22
-    source: pkgs/*.pkg.tar.xz
-    target: html/archpkgs/
-    rm: true
+  image: ictu/sshpass
+  commands:
+    - sshpass -p "uses_sftp" scp pkgs/*.pkg.tar.xz sftpuser@192.168.2.101:html/archpkgs/
