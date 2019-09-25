@@ -12,4 +12,4 @@ steps:
 - name: deploy
   image: ictu/sshpass
   commands:
-    - sshpass -p "uses_sftp" scp pkgs/*.pkg.tar.xz sftpuser@192.168.2.101:html/archpkgs/
+    - sshpass -p "uses_sftp" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null pkgs/*.pkg.tar.xz sftpuser@192.168.2.101:html/archpkgs/
