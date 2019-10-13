@@ -3,13 +3,22 @@ type: docker
 name: default
 
 steps:
-- name: test
+- name: rsync_existing
+  image: ictu/sshpass
+  commands:
+   - sshpass -p "uses_sftp" rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" sftpuser@192.168.2.101:html/archpkgs/ pkgs/
+
+- name: build_packages
   image: phillipkhne/trizen-docker
   commands:
     - sudo mkdir ./pkgs
     - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs ttf-symbola
 
-- name: deploy
+- name: create_repo
+  image: phillipkhne/trizen-docker
+    - repo-add ./pkgs/phillip-private.db.tar.gz .pkgs/*.pkg.tar.gz
+
+- name: deploy_packages
   image: ictu/sshpass
   commands:
-    - sshpass -p "uses_sftp" scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null pkgs/*.pkg.tar.xz sftpuser@192.168.2.101:html/archpkgs/
+    - sshpass -p "uses_sftp" rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" pkgs/ sftpuser@192.168.2.101:html/archpkgs/
