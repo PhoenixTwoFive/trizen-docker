@@ -17,7 +17,7 @@ steps:
 - name: create_repo
   image: phillipkhne/trizen-docker
   commands:
-    - sudo repo-add -n ./pkgs/phillip-private.db.tar.xz ./pkgs/*.pkg.tar.*
+    - sudo repo-add ./pkgs/phillip-private.db.tar.xz ./pkgs/*.pkg.tar.*
 
 - name: deploy_packages
   image: ictu/sshpass
