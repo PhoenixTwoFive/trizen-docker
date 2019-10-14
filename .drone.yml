@@ -5,22 +5,19 @@ name: default
 steps:
 - name: rsync_existing
   image: ictu/sshpass
-  environment:
-    USERNAME:
-      from_secret: username
-    PASSWORD:
-      from_secret: password
   commands:
-   - sshpass -p "${PASSWORD}" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${USERNAME}@192.168.2.101:html/archpkgs/ pkgs/
+   - sshpass -p "uses_sftp" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" sftpuser@192.168.2.101:html/archpkgs/ pkgs/
 
 - name: build_packages
   image: phillipkhne/trizen-docker
   environment:
-    PACKAGES:
-      from_secret: packages
+    USERNAME:
+      from_secret: docker_username
+    PASSWORD:
+      from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs ${PACKAGES}
+    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs  intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre pycharm-professional
 
 - name: create_repo
   image: phillipkhne/trizen-docker
@@ -29,10 +26,5 @@ steps:
 
 - name: deploy_packages
   image: ictu/sshpass
-  environment:
-    USERNAME:
-      from_secret: username
-    PASSWORD:
-      from_secret: password
   commands:
-    - sshpass -p "${PASSWORD}" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" pkgs/ ${USERNAME}@192.168.2.101:html/archpkgs/
+    - sshpass -p "uses_sftp" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" pkgs/ sftpuser@192.168.2.101:html/archpkgs/
