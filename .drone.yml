@@ -17,7 +17,7 @@ steps:
       from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs doomseeker zandronum intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre pycharm-professional
+    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre pycharm-professional
 
 - name: create_repo
   image: phillipkhne/trizen-docker
