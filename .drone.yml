@@ -3,11 +3,6 @@ type: docker
 name: default
 
 steps:
-- name: rsync_existing
-  image: ictu/sshpass
-  commands:
-   - sshpass -p "uses_sftp" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" sftpuser@192.168.2.101:html/archpkgs/ pkgs/
-
 - name: build_packages
   image: phillipkhne/trizen-docker
   environment:
