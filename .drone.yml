@@ -12,7 +12,7 @@ steps:
       from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre pycharm-professional typora mcpelauncher-msa-git mcpelauncher-msa-ui-qt-git mcpelauncher-linux-git mcpelauncher-ui-git
+    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs typora mcpelauncher-msa-git mcpelauncher-msa-ui-qt-git mcpelauncher-linux-git mcpelauncher-ui-git
 
 - name: create_repo
   image: phillipkhne/trizen-docker
