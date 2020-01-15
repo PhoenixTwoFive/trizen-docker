@@ -12,7 +12,8 @@ steps:
     PASSWORD:
       from_secret: docker_password
   commands:
-    - mkdir -p ./pkgs
+    - sudo mkdir -p ./pkgs
+    - sudo chown builduser pkgs
     - trizen -Sy --noinstall --noconfirm ttf-ms-fonts
 
 # For ssh copy
