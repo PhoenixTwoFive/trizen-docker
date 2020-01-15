@@ -1,7 +1,7 @@
 FROM archlinux/base
 RUN pacman -Syu --noconfirm
 RUN pacman -S base-devel git sudo python --needed --noconfirm
-RUN useradd builduser -m
+RUN useradd builduser -m -u 1003
 RUN passwd -d builduser
 RUN printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 USER builduser
