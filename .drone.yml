@@ -4,6 +4,7 @@ name: default
 
 steps:
 - name: build_packages
+  failure: ignore
   image: phillipkhne/trizen-docker
   environment:
     USERNAME:
@@ -12,14 +13,32 @@ steps:
       from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs typora mcpelauncher-msa-git mcpelauncher-msa-ui-qt-git mcpelauncher-linux-git mcpelauncher-ui-git
+    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs typora
 
-- name: create_repo
-  image: phillipkhne/trizen-docker
-  commands:
-    - sudo repo-add ./pkgs/phillip-private.db.tar.xz ./pkgs/*.pkg.tar.*
+# For ssh copy
+#- name: deploy_packages
+#  image: ictu/sshpass
+#  commands:
+#    - sshpass -p "uses_sftp" rsync -lrvh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" pkgs/ sftpuser@192.168.2.101:html/archpkgs/
 
 - name: deploy_packages
   image: ictu/sshpass
   commands:
-    - sshpass -p "uses_sftp" rsync -lrvzh -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" pkgs/ sftpuser@192.168.2.101:html/archpkgs/
+    - rsync -lrvh pkgs/ /var/outdir
+  volumes:
+    - name: outdir
+      path: /var/outdir
+
+
+- name: create_repo
+  image: phillipkhne/trizen-docker
+  volumes:
+  - name: outdir
+    path: /var/outdir
+  commands:
+    - sudo repo-add /var/outdir/phillip-private.db.tar.xz /var/outdir/*.pkg.tar.*
+
+volumes:
+  - name: outdir
+    host:
+        path: /var/www/html/archpkgs/
