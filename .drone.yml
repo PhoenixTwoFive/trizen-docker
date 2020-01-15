@@ -42,3 +42,16 @@ volumes:
   - name: outdir
     host:
         path: /var/www/html/archpkgs/
+
+---
+
+kind: pipeline
+type: docker
+name: test
+
+steps:
+- name: echo
+  failure: ignore
+  image: phillipkhne/trizen-docker
+  commands:
+    - cat /etc/makepkg.conf
