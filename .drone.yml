@@ -13,9 +13,7 @@ steps:
       from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - pwd
-    - ls -al
-    - trizen -Sy --noinstall --noconfirm --movepkg-dir=./pkgs typora
+    - trizen -Sy --noinstall --noconfirm typora
 
 # For ssh copy
 #- name: deploy_packages
