@@ -13,7 +13,7 @@ steps:
       from_secret: docker_password
   commands:
     - sudo mkdir -p ./pkgs
-    - trizen -Sy --noinstall --noconfirm typora
+    - trizen -Sy --noinstall --noconfirm ttf-ms-fonts
 
 # For ssh copy
 #- name: deploy_packages
@@ -36,7 +36,7 @@ steps:
   - name: outdir
     path: /var/outdir
   commands:
-    - sudo repo-add /var/outdir/phillip-private.db.tar.xz /var/outdir/*.pkg.tar.*
+    - sudo repo-add /var/outdir/phillip-private.db.tar.zst /var/outdir/*.pkg.tar.*
 
 volumes:
   - name: outdir
