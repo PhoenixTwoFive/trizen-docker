@@ -54,4 +54,6 @@ steps:
   failure: ignore
   image: phillipkhne/trizen-docker
   commands:
+    - ls -al .
+    - whoami
     - cat /etc/makepkg.conf
